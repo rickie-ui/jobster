@@ -1,9 +1,9 @@
 @extends('layouts.base')
 
 @section('content')
-    <section class="mt-20 w-1/2 mx-auto">
-        <h2 class="font-bold text-center text-5xl">About Us</h2>
-        <p class="text-center text-sm font-semibold opacity-60 mt-3">We help employers and candidates find the right fit</p>
+    <section class="mt-20 w-1/2 ml-32">
+        <h2 class="font-bold  text-5xl">About Us</h2>
+        <p class="text-sm font-semibold opacity-60 mt-3">We help employers and candidates find the right fit</p>
 
 
         <p class="mt-8 font-light ">We are dedicated to connecting talented individuals with their dream careers

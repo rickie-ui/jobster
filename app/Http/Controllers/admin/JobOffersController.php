@@ -45,7 +45,7 @@ class JobOffersController extends Controller
             'location' => 'required',
             'period' => 'required',
             'due' => 'required',
-            'avatar' => 'required',
+            'avatar' => 'required|mimes:jpeg,png,gif,webp,svg|max:1024',
             'description' => 'required'
         ]);
 
@@ -71,10 +71,15 @@ class JobOffersController extends Controller
          $job= $result->findOrFail($id);
            
 
-        //  days left for job
-          $dateCreated = Carbon::parse($job->created_at);
+          //  days left for job
+          $currentDate = Carbon::now();
           $dateClosed = Carbon::parse($job->due);
-          $differenceInDays = $dateClosed->diffInDays($dateCreated);
+         // Ensure the due date is in the future
+        if ($currentDate->lte($dateClosed)) {
+            $differenceInDays = $currentDate->diffInDays($dateClosed);
+        } else {
+            $differenceInDays = -1; // Indicates that the due date has passed
+        }
 
         return view('admin.jobdetail', compact('job', 'differenceInDays'));
     }

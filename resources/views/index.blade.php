@@ -9,9 +9,9 @@
                 your talent
                 and experience
             </p>
-            <form class="relative">
+            <form action="{{ route('query') }}" method="GET" class="relative">
                 <input type="text" class="bg-white rounded-full pl-12 pr-4 py-6 w-96 focus:outline-none"
-                    placeholder="Job title or keyword">
+                    placeholder="Job title or keyword" name="query">
                 <div class="absolute left-4 top-5 text-2xl opacity-60">
                     <i class="fa fa-search "></i>
                 </div>
@@ -42,7 +42,7 @@
             <div
                 class="absolute bg-white z-30 rounded-3xl h-40 w-40 top-36 -right-80 flex justify-center items-center p-2 hover:-translate-y-2 transition-transform ">
                 <div class="text-3xl flex flex-col font-bold opacity-60">
-                    <p>405+</p>
+                    <p>{{ count($jobs) }}+</p>
                     <p class="text-sm my-3">job offers</p>
                 </div>
 
@@ -58,79 +58,31 @@
 
 
         {{-- list of jobs --}}
-        <div class="mt-14 grid grid-cols-4 gap-2">
-            <div class="bg-white shadow-sm outline-none border-0 rounded-3xl h-72 w-64 p-4">
-                <a href="#" class=" block hover:text-[#0769C3] my-6 font-bold text-lg">Social Worker</a>
-                <div class="flex gap-4 mb-16 whitespace-nowrap flex-wrap">
-                    <p class="font-semibold hover:text-[#0769C3] cursor-pointer"><i class="fa fa-globe"></i>
-                        Nairobi,
-                        Kenya</p>
-                    <p>Full-time</p>
-                </div>
+        <div class="mt-14 grid grid-cols-4 place-items-center gap-1">
 
-                <div class="flex justify-between items-center">
-                    <p class="opacity-60">June 8, 2022 by <br> <span class="opacity-100 font-bold"> Atama Inc</span>
-                    </p>
-                    <p class="w-20 h-20 text-3xl flex items-center justify-center rounded-3xl bg-[#E6F0F9]"><i
-                            class="fa fa-codiepie"></i>
-                    </p>
-                </div>
-            </div>
-            <div class="bg-white shadow-sm outline-none border-0 rounded-3xl h-72 w-64 p-4">
-                <a href="#" class=" block hover:text-[#0769C3] my-6 font-bold text-lg">Truck Driver</a>
-                <div class="flex gap-4 mb-16 whitespace-nowrap flex-wrap">
-                    <p class="font-semibold hover:text-[#0769C3] cursor-pointer"><i class="fa fa-globe"></i>
-                        Nakuru,
-                        Kenya</p>
-                    <p>Part-time</p>
-                </div>
+            @foreach ($jobs as $job)
+                <div class="bg-white shadow-sm outline-none border-0 rounded-3xl h-72 w-72 p-4">
+                    <a href="#" class=" block hover:text-[#0769C3] my-6 font-bold text-lg">{{ $job->position }}</a>
+                    <div class="flex gap-4 mb-16 whitespace-nowrap flex-wrap">
+                        <p class="font-semibold hover:text-[#0769C3] cursor-pointer"><i class="fa fa-globe"></i>
+                            {{ $job->location }}</p>
+                        <p>{{ $job->period }}</p>
+                    </div>
 
-                <div class="flex justify-between items-center">
-                    <p class="opacity-60">June 8, 2022 by <br> <span class="opacity-100 font-bold"> GenZ Inc</span>
-                    </p>
-                    <p class="w-20 h-20 text-3xl flex items-center justify-center rounded-3xl bg-[#E6F0F9]"><i
-                            class="fa fa-codiepie"></i>
-                    </p>
+                    <div class="grid grid-cols-2 place-items-center">
+                        <p class="opacity-60">{{ $job->created_at }} by <br> <span class="opacity-100 font-bold">
+                                {{ $job->company }}</span>
+                        </p>
+                        <p class="w-20 h-20 text-3xl flex items-center justify-center rounded-3xl bg-[#E6F0F9]"><i
+                                class="fa fa-codiepie"></i>
+                        </p>
+                    </div>
                 </div>
-            </div>
-            <div class="bg-white shadow-sm outline-none border-0 rounded-3xl h-72 w-64 p-4">
-                <a href="#" class=" block hover:text-[#0769C3] my-6 font-bold text-lg">Mechanic </a>
-                <div class="flex gap-4 mb-16 whitespace-nowrap ">
-                    <p class="font-semibold hover:text-[#0769C3] cursor-pointer"><i class="fa fa-globe"></i>
-                        Mombasa,
-                        Kenya</p>
-                    <p>Temporary</p>
-                </div>
+            @endforeach
 
-                <div class="flex justify-between items-center">
-                    <p class="opacity-60">June 8, 2022 by <br> <span class="opacity-100 font-bold"> Toyota
-                            Inc</span>
-                    </p>
-                    <p class="w-20 h-20 text-3xl flex items-center justify-center rounded-3xl bg-[#E6F0F9]"><i
-                            class="fa fa-codiepie"></i>
-                    </p>
-                </div>
-            </div>
-            <div class="bg-white shadow-sm outline-none border-0 rounded-3xl h-72 w-64 p-4">
-                <a href="#" class=" block hover:text-[#0769C3] my-6 font-bold text-lg">Waitress</a>
-                <div class="flex gap-4 mb-16 whitespace-nowrap flex-wrap">
-                    <p class="font-semibold hover:text-[#0769C3] cursor-pointer"><i class="fa fa-globe"></i>
-                        Nairobi,
-                        Kenya</p>
-                    <p>Contract</p>
-                </div>
-
-                <div class="flex justify-between items-center">
-                    <p class="opacity-60">June 8, 2022 by <br> <span class="opacity-100 font-bold"> Atama Inc</span>
-                    </p>
-                    <p class="w-20 h-20 text-3xl flex items-center justify-center rounded-3xl bg-[#E6F0F9]"><i
-                            class="fa fa-codiepie"></i>
-                    </p>
-                </div>
-            </div>
         </div>
 
-        <a href="#"
+        <a href="{{ route('apply') }}"
             class="rounded-3xl px-4 py-3 bg-[#0769C3] hover:pl-8 transition-all text-white mt-10 inline-block font-semibold">All
             Job
             Offers <i class="fa fa-caret-right"></i></a>

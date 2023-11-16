@@ -3,10 +3,11 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Profile;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
 class Applicant extends Authenticatable
 {
@@ -40,4 +41,9 @@ class Applicant extends Authenticatable
     protected $casts = [
         'password' => 'hashed',
     ];
+
+    // relationship
+    public function profile(){
+       return $this->hasOne(Profile::class, 'applicant_id', 'id');
+    }
 }

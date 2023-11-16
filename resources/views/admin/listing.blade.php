@@ -15,6 +15,7 @@
                             <th class="uppercase  text-xs opacity-50">Phone</th>
                             <th class="uppercase  text-xs opacity-50">Applied On</th>
                             <th class="uppercase  text-xs opacity-50 ">Status</th>
+                            <th class="uppercase  text-xs opacity-50 ">Profile</th>
                             <th class="uppercase  text-xs opacity-50 ">Actions</th>
                         </tr>
                     </thead>
@@ -44,6 +45,11 @@
                             <td>
                                 <p class="px-2 py-1 text-center bg-[#FFA755]  rounded-3xl font-light text-white">Pending</p>
                             </td>
+
+                            <td>
+                                <a href="#" class="text-[#207456] text-sm font-semibold mb-0 hover:opacity-60"> <i
+                                        class="fa fa-eye"></i>&ensp;Details</a>
+                            </td>
                             <td class="space-x-2">
 
                                 <a href="#"
@@ -53,10 +59,10 @@
                                 <a href="#"
                                     class="border border-red-300 text-red-400 py-1 px-3 rounded-md hover:bg-red-400 hover:text-white"
                                     title="reject"><i class="fa fa-ban"></i></a>
-
+                                {{-- 
                                 <a href="#"
                                     class="border border-[#D766C2] text-[#D766C2] py-1 px-3 rounded-md hover:bg-[#D766C2] hover:text-white"
-                                    title="complete"><i class="fa fa-eye"></i></a>
+                                    title="complete"><i class="fa fa-eye"></i></a> --}}
                                 <a href="#"
                                     class="border border-[#FFA755] text-[#FFA755] py-1 px-3 rounded-md hover:bg-[#FFA755] hover:text-white"
                                     title="download cv"><i class="fa fa-download"></i></a>

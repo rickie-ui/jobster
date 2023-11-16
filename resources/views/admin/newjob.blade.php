@@ -56,10 +56,17 @@
                             <label for="period" class="block my-2">Job Type</label>
                             <select name="period"
                                 class="w-full border px-4 py-2 rounded-lg outline-none focus:bg-[#F3F8FB]">
-                                <option></option>
-                                <option value="Full-Time">Full-Time</option>
-                                <option value="Part-Time">Part-Time</option>
+                                <option value="" {{ old('period') === '' ? 'selected' : '' }}></option>
+                                <option value="Full-Time" {{ old('period') === 'Full-Time' ? 'selected' : '' }}>Full-Time
+                                </option>
+                                <option value="Part-Time" {{ old('period') === 'Part-Time' ? 'selected' : '' }}>Part-Time
+                                </option>
+                                <option value="Temporary" {{ old('period') === 'Temporary' ? 'selected' : '' }}>Temporary
+                                </option>
+                                <option value="Contract" {{ old('period') === 'Contract' ? 'selected' : '' }}>Contract
+                                </option>
                             </select>
+
                             @error('period')
                                 <div class="text-red-500 text-sm">
                                     {{ $message }}
@@ -93,8 +100,7 @@
                     </div>
 
                     <label for="description" class="block my-2">Job Description</label>
-                    <textarea name="description" id="editor" class="w-full border px-4 py-2  rounded-lg outline-none focus:bg-[#F3F8FB]"
-                        value="{{ old('description') }}"></textarea>
+                    <textarea name="description" id="editor" class="w-full border px-4 py-2  rounded-lg outline-none focus:bg-[#F3F8FB]"> {{ old('description') }}</textarea>
                     @error('description')
                         <div class="text-red-500 text-sm">
                             {{ $message }}

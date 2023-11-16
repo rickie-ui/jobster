@@ -65,8 +65,13 @@
             <div class="bg-[#ECF1F0] rounded-lg p-5 w-full mt-10 flex justify-between items-center">
                 <div>
                     <h2 class="text-2xl font-medium">Check more jobs available.</h2>
-                    <p class="font-medium my-3"> <span class="text-red-400">{{ $differenceInDays }}</span> days left to
-                        apply</p>
+                    @if ($differenceInDays >= 0)
+                        <p class="font-medium my-3"> <span class="text-red-400">{{ $differenceInDays }}</span> days left to
+                            apply</p>
+                    @else
+                        <p class="font-medium px-10 inline-block py-2 rounded-3xl bg-[#FFF2D9] my-3 text-[#FFA755]">Closed
+                        </p>
+                    @endif
                 </div>
 
                 <a href="{{ route('offers') }}"

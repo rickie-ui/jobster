@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\IndexController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\admin\AdminAuthController;
 use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\JobOffersController;
@@ -21,12 +23,10 @@ use App\Http\Controllers\applicants\UserAuthController;
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
-Route::get('/contact', function () {
-    return view('pages.contact');
-});
+Route::get('/', [IndexController::class, 'index'])->name('index');
+Route::get('/search', [IndexController::class, 'search'])->name('query');
+Route::get('/contact', [ContactController::class, 'index'])->name('contact');
+Route::post('/contact', [ContactController::class, 'store']);
 Route::get('/about', function () {
     return view('pages.about');
 });
@@ -40,12 +40,17 @@ Route::post('/users/signin', [UserAuthController::class, 'login']);
 
 // Jobs page
 Route::get('/jobs', [ApplyController::class, 'index'])->name('apply');
+Route::get('/jobs/search', [ApplyController::class, 'search'])->name('search');
 
 // authenticated user pages
 Route::get('users/jobs', [JobsController::class, 'index'])->name('jobs');
-Route::get('users/jobs/detail', [JobsController::class, 'show'])->name('detail');
-Route::get('users/jobs/applications', [JobsController::class, 'create'])->name('applications');
-Route::get('users/profile', [ProfileController::class, 'index'])->name('profile');
+Route::get('users/jobs/search', [JobsController::class, 'search'])->name('jobs-search');
+Route::get('users/jobs/detail/{id}', [JobsController::class, 'show'])->name('detail');
+Route::post('users/jobs/{id}/apply', [JobsController::class, 'store'])->name('store');
+Route::get('users/applications', [JobsController::class, 'create'])->name('applications');
+
+Route::get('users/profile/{id}', [ProfileController::class, 'index'])->name('profile');
+Route::put('users/profile/{id}', [ProfileController::class, 'update']);
 
 
 // Admin pages

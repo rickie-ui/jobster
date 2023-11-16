@@ -22,6 +22,7 @@
 
                     @foreach ($jobs as $job)
                         <div class="p-6 bg-white rounded-lg">
+
                             <h2 class="text-lg my-2 font-medium">{{ $job->position }}</h2>
                             <div class="flex gap-4 font-medium opacity-60">
                                 <h2 class="py-1 px-4 border-0  border-r-2 border-l-2  text-sm">
@@ -38,7 +39,7 @@
                             </div>
 
                             <p class="mt-3 mb-6">
-                                {!! substr($job->description, 0, 255) . '...' !!}
+                                {!! \Illuminate\Support\Str::words($job->description, 16, '...') !!}
                             </p>
 
                             <hr class="mt-4">

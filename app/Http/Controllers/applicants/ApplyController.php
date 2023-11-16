@@ -2,64 +2,84 @@
 
 namespace App\Http\Controllers\applicants;
 
-use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 
 class ApplyController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('pages.jobs');
+        
+    // Store checkbox states in sessions
+    if ($request->filled('part_time')) {
+        session(['part_time' => true]);
+    } else {
+        session(['part_time' => false]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+    if ($request->filled('full_time')) {
+        session(['full_time' => true]);
+    } else {
+        session(['full_time' => false]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
+    if ($request->filled('temporary')) {
+        session(['temporary' => true]);
+    } else {
+        session(['temporary' => false]);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
+    if ($request->filled('contract')) {
+        session(['contract' => true]);
+    } else {
+        session(['contract' => false]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+    $query = DB::table('jobs')->latest();
+
+    // Use 'orWhere' conditions for all checkboxes to filter the results
+    if (session('part_time')) {
+        $query->orWhere('period', 'Part-Time');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
+    if (session('full_time')) {
+        $query->orWhere('period', 'Full-Time');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+    if (session('temporary')) {
+        $query->orWhere('period', 'Temporary');
     }
+
+    if (session('contract')) {
+        $query->orWhere('period', 'Contract');
+    }
+
+             $jobs = $query->limit(25)->get();
+
+            $jobs->map(function ($job) {
+                $job->created_at = Carbon::parse($job->created_at)->format("d.m.Y");
+                return $job;
+            });
+        return view('pages.jobs', compact('jobs'));
+    }
+
+
+    /**
+     * Search the specified resource.
+     */
+    public function search(Request $request)
+    {
+         $query = $request->input('query');
+
+            $jobs = DB::table('jobs')
+                ->where('position', 'like', '%' . $query . '%')
+                ->get();
+
+            return view('pages.jobs', compact('jobs'));
+    } 
 }

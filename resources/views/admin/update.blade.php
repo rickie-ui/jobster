@@ -65,6 +65,12 @@
                                 <option value="Part-Time" {{ $job->period == 'Part-Time' ? 'selected' : '' }}>
                                     Part-Time
                                 </option>
+                                <option value="Temporary" {{ $job->period == 'Temporary' ? 'selected' : '' }}>
+                                    Temporary
+                                </option>
+                                <option value="Contract" {{ $job->period == 'Contract' ? 'selected' : '' }}>
+                                    Contract
+                                </option>
                             </select>
                             @error('period')
                                 <div class="text-red-500 text-sm">
