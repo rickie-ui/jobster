@@ -25,6 +25,8 @@ use App\Http\Controllers\applicants\UserAuthController;
 
 Route::get('/', [IndexController::class, 'index'])->name('index');
 Route::get('/search', [IndexController::class, 'search'])->name('query');
+Route::get('/jobs', [ApplyController::class, 'index'])->name('apply');
+Route::get('/jobs/search', [ApplyController::class, 'search'])->name('search');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 Route::post('/contact', [ContactController::class, 'store']);
 Route::get('/about', function () {
@@ -37,10 +39,6 @@ Route::post('/users/signup', [UserAuthController::class, 'store']);
 
 Route::get('/users/signin', [UserAuthController::class, 'show'])->name('signin');
 Route::post('/users/signin', [UserAuthController::class, 'login']);
-
-// Jobs page
-Route::get('/jobs', [ApplyController::class, 'index'])->name('apply');
-Route::get('/jobs/search', [ApplyController::class, 'search'])->name('search');
 
 // authenticated user pages
 Route::get('users/jobs', [JobsController::class, 'index'])->name('jobs');
@@ -65,7 +63,7 @@ Route::post('/admin/login', [AdminAuthController::class, 'login']);
 // >> other pages
 Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 Route::get('/admin/applicants', [DashboardController::class, 'show'])->name('applicants');
-Route::get('/admin/applicant/detail', [DashboardController::class, 'detail'])->name('applicant');
+Route::get('/admin/applicant/detail/{id}', [DashboardController::class, 'detail'])->name('applicant');
 
 Route::get('/admin/joboffers', [JobOffersController::class, 'index'])->name('offers');
 

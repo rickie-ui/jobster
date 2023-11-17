@@ -19,14 +19,6 @@ class AdminAuthController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
@@ -59,24 +51,28 @@ class AdminAuthController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function login()
+    public function login(Request $request)
     {
-        //
+        $this->validate($request,[
+                'email' => 'required|email',
+                'password' => 'required'
+              ]);
+
+             if (!Auth::guard('admin')->attempt($request->only('email','password'))) {
+              return back()->with('message', 'Invalid credentials.');
+             }
+
+              return redirect()->route('dashboard');;
     }
 
     /**
-     * Update the specified resource in storage.
+     * Log out the admin user.
      */
-    public function update(Request $request, string $id)
+    public function logout()
     {
-        //
+        Auth::guard('admin')->logout();
+
+        return redirect()->route('login');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 }

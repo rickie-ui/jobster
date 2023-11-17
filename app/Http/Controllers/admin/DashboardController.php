@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\Applicant;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
@@ -18,48 +19,43 @@ class DashboardController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function detail()
+    public function detail($id)
     {
-    return view('admin.info');
+                $applicant = Applicant::find($id);
+                $appId = $applicant->id;
+
+                $profile = DB::table('applicants')
+                    ->leftJoin('profiles', 'applicants.id', '=', 'profiles.applicant_id')
+                    ->select(
+                        'applicants.id',
+                        'applicants.full_name',
+                        'applicants.email',
+                        'profiles.location',
+                        'profiles.phone',
+                        'profiles.age',
+                        'profiles.gender',
+                        'profiles.about',
+                        'profiles.resume',
+                        'profiles.avatar'
+                    )    
+                    ->where('applicants.id', $appId)
+                    ->first();
+        
+                return view('admin.info', compact('profile'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+  
 
     /**
      * Display the specified resource.
      */
     public function show()
     {
-        return view('admin.applicants');
-    }
+         $applicants = DB::table('applicants')
+         ->leftJoin('profiles', 'applicants.id', '=', 'profiles.applicant_id')
+         ->select('applicants.id', 'applicants.full_name', 'applicants.email', 'profiles.location','profiles.phone', 'profiles.age', 'profiles.gender', 'profiles.about', 'profiles.resume', 'profiles.avatar' )    
+           ->get();
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return view('admin.applicants', compact('applicants'));
     }
 }
