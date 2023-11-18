@@ -1,9 +1,5 @@
 <?php
 
-use App\Models\Admin;
-use App\Models\Applicant;
-use Illuminate\Foundation\Auth\User;
-
 return [
 
     /*
@@ -19,7 +15,7 @@ return [
 
     'defaults' => [
         'guard' => 'web',
-        'passwords' => 'applicants',
+        'passwords' => 'users',
     ],
 
     /*
@@ -39,14 +35,10 @@ return [
     |
     */
 
-    'guards' => [
+  'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'applicants',
-        ],
-         'admin' => [
-            'driver' => 'session',
-            'provider' => 'admins',
+            'provider' => 'users',
         ],
     ],
 
@@ -68,18 +60,9 @@ return [
     */
 
     'providers' => [
-        // 'users' => [
-        //     'driver' => 'eloquent',
-        //     'model' => App\Models\User::class,
-        // ],
-
-         'applicants' => [
+        'users' => [
             'driver' => 'eloquent',
-            'model' => App\Models\Applicant::class,
-        ],
-        'admins' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\Admin::class,
+            'model' => App\Models\User::class,
         ],
 
         // 'users' => [
@@ -108,21 +91,9 @@ return [
     */
 
     'passwords' => [
-        // 'users' => [
-        //     'provider' => 'users',
-        //     'table' => 'password_reset_tokens',
-        //     'expire' => 60,
-        //     'throttle' => 60,
-        // ],
-         'applicants' => [
-            'provider' => 'applicants',
+        'users' => [
+            'provider' => 'users',
             'table' => 'password_reset_tokens',
-            'expire' => 60,
-            'throttle' => 60,
-        ],
-         'admins' => [
-            'provider' => 'admins',
-            'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,
         ],

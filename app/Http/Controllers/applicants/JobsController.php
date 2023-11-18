@@ -128,14 +128,14 @@ class JobsController extends Controller
     // Check if the due date is in the future
     if (Carbon::now()->lt(Carbon::parse($dueDate))) {
         // Check if the user has already applied for this job
-        $existingApplication = Application::where('applicant_id', $applicant)
+        $existingApplication = Application::where('user_id', $applicant)
             ->where('job_id', $jobId)
             ->first();
 
         // If the user hasn't applied for this job, create a new application
         if (!$existingApplication) {
             Application::create([
-                'applicant_id' => $applicant,
+                'user_id' => $applicant,
                 'job_id' => $jobId,
             ]);
 
@@ -157,7 +157,7 @@ class JobsController extends Controller
         $results = DB::table('applications')
             ->join('jobs', 'applications.job_id', '=', 'jobs.id')
             ->select('applications.*', 'jobs.position', 'jobs.location', 'jobs.company')
-            ->where('applications.applicant_id', '=', auth()->id())
+            ->where('applications.user_id', '=', auth()->id())
             ->get();
 
             // dd($results);

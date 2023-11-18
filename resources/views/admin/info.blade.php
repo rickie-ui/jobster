@@ -12,9 +12,9 @@
             <div class="flex gap-6 py-5">
                 <img src="{{ optional($profile)->avatar ? asset('storage/' . $profile->avatar) : asset('/images/teamwork.png') }}"
                     alt="avatar" class="h-20 w-20 rounded-full border-2 border-[#207456] object-cover object-center">
-                <div class="opacity-60 font-semibold">
+                <div class="opacity-60 font-semibold w-8/12">
                     <h3 class="text-lg">{{ $profile->full_name ?? 'N/A' }}</h3>
-                    <h3 class="text-sm">{{ $profile->email ?? 'N/A' }}</h3>
+                    <h3 class="text-xs">{{ $profile->email ?? 'N/A' }}</h3>
                     <p class="text-sm leading-6 my-3">{{ $profile->about ?? 'Not available!' }}</p>
                 </div>
             </div>
@@ -29,7 +29,7 @@
 
                     <div>
                         Location <br>
-                        <p class="my-1 text-sm opacity-40">{{ $profile->location ?? 'N/A' }}</p>
+                        <p class="my-1 text-xs opacity-40">{{ $profile->location ?? 'N/A' }}</p>
                     </div>
                 </div>
 
@@ -40,7 +40,7 @@
 
                     <div>
                         Phone <br>
-                        <p class="my-1 text-sm opacity-40">+{{ $profile->phone ?? 'N/A' }}</p>
+                        <p class="my-1 text-xs opacity-40">{{ $profile->phone ?? 'N/A' }}</p>
                     </div>
                 </div>
 
@@ -51,7 +51,7 @@
 
                     <div>
                         Gender <br>
-                        <p class="my-1 text-sm opacity-40">{{ $profile->gender ?? 'N/A' }}</p>
+                        <p class="my-1 text-xs opacity-40">{{ $profile->gender ?? 'N/A' }}</p>
                     </div>
                 </div>
 
@@ -62,7 +62,7 @@
 
                     <div>
                         Age(yrs) <br>
-                        <p class="my-1 text-sm opacity-40">{{ $profile->age ?? 'N/A' }}</p>
+                        <p class="my-1 text-xs opacity-40">{{ $profile->age ?? 'N/A' }}</p>
                     </div>
                 </div>
             </div>

@@ -12,6 +12,7 @@ checkboxes.forEach((checkbox) => {
 let duration = document.getElementById("message");
 let success = document.getElementById("success");
 let profile = document.getElementById("profile");
+let logout = document.getElementById("logout");
 
 setTimeout(() => {
     duration.style.cssText = `display: none;`;
@@ -22,3 +23,6 @@ setTimeout(() => {
 setTimeout(() => {
     profile.style.cssText = `display: none;`;
 }, 3000);
+setTimeout(() => {
+    logout.style.cssText = `display: none;`;
+}, 4000);

@@ -11,7 +11,7 @@
             </div>
         @endif
 
-        <form action="/users/profile/{{ $applicant->id }}" method="POST" enctype="multipart/form-data">
+        <form action="/users/profile/{{ $user->id }}" method="POST" enctype="multipart/form-data">
 
             @csrf
 
@@ -21,7 +21,7 @@
                 <div class="w-full">
                     <label for="full_name" class="block my-2">Full Name</label>
                     <input type="text" class="w-full border-2 px-4 py-2 rounded-md outline-none focus:bg-[#F3F8FB]"
-                        name="full_name" value="{{ $applicant->full_name }}">
+                        name="full_name" value="{{ $user->full_name }}">
                     @error('full_name')
                         <div class="text-red-500 text-sm">
                             {{ $message }}
@@ -31,7 +31,7 @@
                 <div class="w-full">
                     <label for="email" class="block my-2">Email</label>
                     <input type="text" class="w-full border-2 px-4 py-2 rounded-md outline-none focus:bg-[#F3F8FB]"
-                        name="email" value="{{ $applicant->email }}">
+                        name="email" value="{{ $user->email }}">
                     @error('email')
                         <div class="text-red-500 text-sm">
                             {{ $message }}
@@ -109,7 +109,7 @@
             <div class=" flex space-x-4">
                 <div class="w-full">
                     <label for="resume" class="block my-2">Curriculum Vitae</label>
-                    <input type="file" name="resume" accept=".pdf, .doc, .docx"
+                    <input type="file" name="resume"
                         class="w-full border-2 px-4 py-2 rounded-md outline-none focus:bg-[#F3F8FB]" multiple />
                     @error('resume')
                         <div class="text-red-500 text-sm">
@@ -119,7 +119,7 @@
                 </div>
                 <div class="w-full">
                     <label for="avatar" class="block my-2">Photo</label>
-                    <input type="file" name="avatar" accept=".webp, .jpeg, .png"
+                    <input type="file" name="avatar"
                         class="w-full border-2 px-4 py-2 rounded-md outline-none focus:bg-[#F3F8FB]" multiple />
                     @error('avatar')
                         <div class="text-red-500 text-sm">

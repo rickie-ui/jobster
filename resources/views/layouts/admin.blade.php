@@ -18,6 +18,7 @@
 
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
     <script src="{{ asset('custom.js') }}"></script>
 
 
@@ -40,9 +41,10 @@
                     Job</a>
             </li>
 
-            <li class="hover:opacity-60 transition-all  flex items-center">
-                <a href="#" class="text-white rounded-3xl text-sm">
-                    <i class="fa fa-user"></i>&ensp;Jane Wachera</a>
+            <li class="hover:opacity-60 transition-all  flex items-center cursor-pointer">
+                <p class="text-white rounded-3xl text-sm">
+                    <i class="fa fa-user"></i>&ensp;{{ auth()->user()->role == ('admin')->full_name }}
+                </p>
             </li>
         </ul>
     </header>
@@ -72,7 +74,7 @@
                         <i class="fa fa-address-book"></i>&ensp; Applications</a>
                 </li>
                 <li class=" font-light mt-5">
-                    <form action="#" method="POST">
+                    <form action="{{ route('logout') }}" method="POST">
 
                         @csrf
 

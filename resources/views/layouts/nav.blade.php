@@ -16,6 +16,8 @@
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
     <script defer src="{{ asset('data.js') }}"></script>
     <script defer src="{{ asset('custom.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
+
 
 
     <title>Jobster</title>
@@ -44,11 +46,26 @@
                     class="block p-2 {{ request()->is('users/applications') ? 'text-[#2CB39C] border-b-2 border-[#207456]' : '' }} ">My
                     Jobs</a>
             </li>
-            <li class="hover:opacity-60 transition-all  flex items-center">
-                <a href="/users/profile/{{ auth()->id() }}"
-                    class="block p-2 capitalize {{ request()->is('users/profile/*') ? 'text-[#2CB39C] border-b-2 border-[#207456]' : '' }}"><i
-                        class="fa fa-address-book-o"></i> {{ auth()->user()->full_name }}</a>
+
+            <li x-data="{ isOpen: false }" class="transition-all flex items-center relative">
+                <div x-on:mouseover="isOpen = true" x-on:mouseout="isOpen = false">
+                    <a href="/users/profile/{{ auth()->id() }}"
+                        class="block p-2 capitalize {{ request()->is('users/profile/*') ? 'text-[#2CB39C] border-b-2 border-[#207456]' : '' }}">
+                        <i class="fa fa-address-book-o"></i> {{ auth()->user()->role == ('applicant')->full_name }}
+                    </a>
+
+                    <form x-show="isOpen" x-cloak action="{{ route('logout') }}" method="POST"
+                        class="bg-white p-2  shadow-md absolute right-0 top-full">
+                        @csrf
+                        <button type="submit" class="text-red-500 hover:opacity-60"><i class="fa fa-sign-out"></i>
+                            Logout</button>
+                    </form>
+                </div>
             </li>
+
+
+
+
         </ul>
     </header>
 

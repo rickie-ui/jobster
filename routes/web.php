@@ -1,17 +1,15 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\ContactController;
-use App\Http\Controllers\admin\AdminAuthController;
 use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\JobOffersController;
 use App\Http\Controllers\applicants\JobsController;
 use App\Http\Controllers\applicants\ApplyController;
 use App\Http\Controllers\admin\ApplicationsController;
 use App\Http\Controllers\applicants\ProfileController;
-use App\Http\Controllers\applicants\UserAuthController;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -33,12 +31,15 @@ Route::get('/about', function () {
     return view('pages.about');
 });
 
-//users/applicants
-Route::get('/users/signup', [UserAuthController::class, 'index'])->name('signup');
-Route::post('/users/signup', [UserAuthController::class, 'store']);
+// logout logic
+Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 
-Route::get('/users/signin', [UserAuthController::class, 'show'])->name('signin');
-Route::post('/users/signin', [UserAuthController::class, 'login']);
+//users/applicants
+Route::get('/users/signup', [UserController::class, 'index'])->name('signup');
+Route::post('/users/signup', [UserController::class, 'store']);
+
+Route::get('/users/signin', [UserController::class, 'show'])->name('signin');
+Route::post('/users/signin', [UserController::class, 'login']);
 
 // authenticated user pages
 Route::get('users/jobs', [JobsController::class, 'index'])->name('jobs');
@@ -54,11 +55,11 @@ Route::put('users/profile/{id}', [ProfileController::class, 'update']);
 // Admin pages
 // >> authentication pages
 
-Route::get('/admin/register', [AdminAuthController::class, 'index'])->name('register');
-Route::post('/admin/register', [AdminAuthController::class, 'store']);
+Route::get('/admin/register', [UserController::class, 'signup'])->name('register');
+Route::post('/admin/register', [UserController::class, 'create']);
 
-Route::get('/admin/login', [AdminAuthController::class, 'show'])->name('login');
-Route::post('/admin/login', [AdminAuthController::class, 'login']);
+Route::get('/admin/login', [UserController::class, 'signin'])->name('login');
+Route::post('/admin/login', [UserController::class, 'login']);
 
 // >> other pages
 Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('dashboard');

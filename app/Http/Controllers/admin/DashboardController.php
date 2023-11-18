@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Applicant;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
@@ -21,15 +21,15 @@ class DashboardController extends Controller
      */
     public function detail($id)
     {
-                $applicant = Applicant::find($id);
+                $applicant = User::find($id);
                 $appId = $applicant->id;
 
-                $profile = DB::table('applicants')
-                    ->leftJoin('profiles', 'applicants.id', '=', 'profiles.applicant_id')
+                $profile = DB::table('users')
+                    ->leftJoin('profiles', 'users.id', '=', 'profiles.user_id')
                     ->select(
-                        'applicants.id',
-                        'applicants.full_name',
-                        'applicants.email',
+                        'users.id',
+                        'users.full_name',
+                        'users.email',
                         'profiles.location',
                         'profiles.phone',
                         'profiles.age',
@@ -38,7 +38,7 @@ class DashboardController extends Controller
                         'profiles.resume',
                         'profiles.avatar'
                     )    
-                    ->where('applicants.id', $appId)
+                    ->where('users.id', $appId)
                     ->first();
         
                 return view('admin.info', compact('profile'));
@@ -51,9 +51,9 @@ class DashboardController extends Controller
      */
     public function show()
     {
-         $applicants = DB::table('applicants')
-         ->leftJoin('profiles', 'applicants.id', '=', 'profiles.applicant_id')
-         ->select('applicants.id', 'applicants.full_name', 'applicants.email', 'profiles.location','profiles.phone', 'profiles.age', 'profiles.gender', 'profiles.about', 'profiles.resume', 'profiles.avatar' )    
+         $applicants = DB::table('users')
+         ->leftJoin('profiles', 'users.id', '=', 'profiles.user_id')
+         ->select('users.id', 'users.full_name', 'users.email', 'profiles.location','profiles.phone', 'profiles.age', 'profiles.gender', 'profiles.about', 'profiles.resume', 'profiles.avatar' )    
            ->get();
 
         return view('admin.applicants', compact('applicants'));

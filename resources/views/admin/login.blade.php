@@ -9,6 +9,8 @@
     @vite('resources/css/app.css')
     {{-- icons --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="{{ asset('data.js') }}" defer></script>
+
     <title>Login</title>
 </head>
 
@@ -61,6 +63,14 @@
             New to Jobster? <a href="{{ route('register') }}" class="text-[#0769C3] hover:underline">Create an
                 account</a>
         </p>
+
+        @if (session('logout'))
+            <div class="py-2 absolute right-4 top-4 transition-all  px-6 rounded-md font-medium  text-white bg-red-400"
+                id="logout">
+                <i class="fa fa-check-circle"></i>
+                {{ session('logout') }}
+            </div>
+        @endif
 
     </section>
 

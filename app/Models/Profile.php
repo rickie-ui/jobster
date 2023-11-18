@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Profile extends Model
 {
@@ -15,7 +15,7 @@ class Profile extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'applicant_id',
+        'user_id',
         'location',
         'phone',
         'age',
@@ -24,4 +24,5 @@ class Profile extends Model
         'resume',
         'avatar',
     ];
+
 }

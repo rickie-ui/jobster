@@ -1,11 +1,7 @@
 <!-- TODO -->
 
-### Tables in database
+### complete the logic of the following:
 
-> > admins
-> > applicants
+> > authentication
 > > applications
-> > jobs
-> > interviews
-> > applicant profile
-> > admin profile
+> > dashboard

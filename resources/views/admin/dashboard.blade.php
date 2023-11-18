@@ -120,14 +120,15 @@
                             </td>
 
                             <td>
-                                <p class="text-gray-500 text-sm font-semibold mb-0">
-                                    {{-- @if ($application->status == '1')
+
+                                {{-- @if ($application->status == '1')
                                         <span class="text-green-500">Pending</span>
                                     @elseif($application->status == '2')
                                         <span class="text-orange-300">Approved</span>
                                     @elseif($application->status == '3') --}}
-                                    <span class="text-red-500">Rejected</span>
-                                    {{-- @endif --}}
+                                {{-- @endif --}}
+                                <p class="px-1 py-1 text-center border border-[#e74c3c] text-[#e74c3c] rounded-3xl">
+                                    <i class="fa fa-dot-circle-o"></i> Rejected
                                 </p>
                             </td>
                         </tr>

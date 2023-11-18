@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('applications', function (Blueprint $table) {
+        Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('applicant_id')->references('id')->on('applicants')->onDelete('cascade');
-            $table->foreignId('job_id')->references('id')->on('jobs')->onDelete('cascade');
-            $table->tinyInteger('status')->default('1');
+            $table->string('full_name');
+            $table->string('email')->unique();
+            $table->string('password');
+            $table->enum('role', ['admin', 'applicant']);
             $table->timestamps();
         });
     }
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('applications');
+        Schema::dropIfExists('users');
     }
 };
