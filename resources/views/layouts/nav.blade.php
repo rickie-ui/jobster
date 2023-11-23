@@ -51,7 +51,7 @@
                 <div x-on:mouseover="isOpen = true" x-on:mouseout="isOpen = false">
                     <a href="/users/profile/{{ auth()->id() }}"
                         class="block p-2 capitalize {{ request()->is('users/profile/*') ? 'text-[#2CB39C] border-b-2 border-[#207456]' : '' }}">
-                        <i class="fa fa-address-book-o"></i> {{ auth()->user()->role == ('applicant')->full_name }}
+                        <i class="fa fa-address-book-o"></i> {{ auth()->user()->full_name }}
                     </a>
 
                     <form x-show="isOpen" x-cloak action="{{ route('logout') }}" method="POST"

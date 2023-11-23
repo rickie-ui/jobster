@@ -29,20 +29,20 @@
 
                         <td>
                             @if ($result->status == '1')
-                                <p class="px-1  py-1 text-center border border-[#FFA755] text-[#FFA755]  rounded-3xl">
+                                <p class="px-4  py-0.5 text-center border border-[#FFA755] text-[#FFA755]  rounded-3xl">
                                     <i class="fa fa-dot-circle-o"></i> Pending
                                 </p>
                             @elseif ($result->status == '2')
-                                <p class="px-1 py-1 text-center border border-[#3498db] text-[#3498db] rounded-3xl">
+                                <p class="px-4 py-0.5 text-center border border-[#3498db] text-[#3498db] rounded-3xl">
                                     <i class="fa fa-dot-circle-o"></i> Ongoing
                                 </p>
                             @elseif ($result->status == '3')
-                                <p class="px-1 py-1 text-center border border-[#207456] text-[#207456] rounded-3xl">
-                                    <i class="fa fa-dot-circle-o"></i> Approved
+                                <p class="px-4 py-0.5 text-center border border-[#e74c3c] text-[#e74c3c] rounded-3xl">
+                                    <i class="fa fa-dot-circle-o"></i> Rejected
                                 </p>
                             @elseif ($result->status == '4')
-                                <p class="px-1 py-1 text-center border border-[#e74c3c] text-[#e74c3c] rounded-3xl">
-                                    <i class="fa fa-dot-circle-o"></i> Rejected
+                                <p class="px-4 py-0.5 text-center border border-[#D766C2] text-[#D766C2] rounded-3xl">
+                                    <i class="fa fa-dot-circle-o"></i> Approved
                                 </p>
                             @endif
                         </td>

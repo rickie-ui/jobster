@@ -20,9 +20,13 @@ $(document).ready(function () {
     // pop up message
 
     let duration = document.getElementById("duration");
+    let app = document.getElementById("job-status");
 
     setTimeout(() => {
         duration.style.cssText = `display: none;`;
+    }, 3000);
+    setTimeout(() => {
+        app.style.cssText = `display: none;`;
     }, 3000);
 
     // limiting past dates

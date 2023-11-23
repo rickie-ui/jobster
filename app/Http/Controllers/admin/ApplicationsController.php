@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\Application;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 
 class ApplicationsController extends Controller
 {
@@ -12,54 +14,66 @@ class ApplicationsController extends Controller
      */
     public function index()
     {
-        return view('admin.listing');
+
+          $applications = DB::table('applications')
+                    ->leftJoin('users', 'applications.user_id', '=', 'users.id')
+                    ->leftJoin('jobs', 'applications.job_id', '=', 'jobs.id')
+                    ->select(
+                        'users.full_name',
+                        'users.email',
+                        'applications.id',
+                        'applications.user_id',
+                        'applications.status',
+                        'applications.created_at',
+                        'jobs.company',
+                        'jobs.position',
+
+                    )
+                    ->whereIn('applications.status', [1, 2])
+                    ->get();
+
+                    // dd($applications);
+
+        return view('admin.listing', compact('applications'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * update application status approve.
      */
-    public function create()
+    public function approve(Request $request, $id)
     {
-        //
+        $application = Application::findOrFail($id);
+        
+        // Update the status in the database as needed
+        $application->update(['status' => 2]);
+
+        return redirect()->back()->with('status', 'Status updated successfully!');
     }
 
     /**
-     * Store a newly created resource in storage.
+     * update application status reject.
      */
-    public function store(Request $request)
+    public function reject(Request $request, $id)
     {
-        //
+         $application = Application::findOrFail($id);
+
+        // Update the status in the database as needed
+        $application->update(['status' => 3]);
+
+        return redirect()->back()->with('status', 'Status updated successfully!'); 
     }
 
     /**
-     * Display the specified resource.
+     * update application status hire.
      */
-    public function show(string $id)
+    public function hire(Request $request, $id)
     {
-        //
+         $application = Application::findOrFail($id);
+
+        // Update the status in the database as needed
+        $application->update(['status' => 4]);
+
+        return redirect()->back()->with('status', 'Status updated successfully!'); 
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 }

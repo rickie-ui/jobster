@@ -19,6 +19,8 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
     <script src="{{ asset('custom.js') }}"></script>
 
 
@@ -43,7 +45,7 @@
 
             <li class="hover:opacity-60 transition-all  flex items-center cursor-pointer">
                 <p class="text-white rounded-3xl text-sm">
-                    <i class="fa fa-user"></i>&ensp;{{ auth()->user()->role == ('admin')->full_name }}
+                    <i class="fa fa-user"></i>&ensp;{{ auth()->user()->full_name }}
                 </p>
             </li>
         </ul>

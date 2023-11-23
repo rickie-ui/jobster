@@ -9,68 +9,126 @@
                 <table class="display whitespace-nowrap" id="table1">
                     <thead>
                         <tr>
-                            <th class="uppercase  text-xs opacity-50">Position</th>
+
                             <th class="uppercase  text-xs opacity-50">Name</th>
                             <th class="uppercase  text-xs opacity-50">Email</th>
-                            <th class="uppercase  text-xs opacity-50">Phone</th>
+                            <th class="uppercase  text-xs opacity-50">Company</th>
+                            <th class="uppercase  text-xs opacity-50">Position</th>
                             <th class="uppercase  text-xs opacity-50">Applied On</th>
-                            <th class="uppercase  text-xs opacity-50 ">Status</th>
-                            <th class="uppercase  text-xs opacity-50 ">Profile</th>
+                            <th class="uppercase  text-xs opacity-50 ">Progress</th>
                             <th class="uppercase  text-xs opacity-50 ">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
 
+                        @foreach ($applications as $application)
+                            <tr>
 
-                        <tr>
-                            <td>
-                                <a href="#" class="text-gray-500 font-semibold text-sm">Painter</a>
-                            </td>
+                                <td>
+                                    <a href="/admin/applicant/detail/{{ $application->user_id }}"
+                                        class="text-gray-500 font-semibold text-sm hover:text-[#34BAA5]">{{ $application->full_name }}</a>
+                                </td>
 
-                            <td>
-                                <a href="#" class="text-gray-500 font-semibold text-sm">Joyce Wawira</a>
-                            </td>
+                                <td>
+                                    <p class="text-gray-500 text-sm font-semibold mb-0">{{ $application->email }}</p>
+                                </td>
 
-                            <td>
-                                <p class="text-gray-500 text-sm font-semibold mb-0">joycewawira@gmail.com</p>
-                            </td>
+                                <td>
+                                    <p class="text-gray-500 font-semibold text-sm"> {{ $application->company }} </p>
+                                </td>
 
-                            <td>
-                                <p class="text-gray-500 text-sm font-semibold mb-0">+254712345678</p>
-                            </td>
-                            <td>
-                                <p class="text-gray-500 text-sm font-semibold mb-0">24-01-2023</p>
-                            </td>
+                                <td>
+                                    <p class="text-gray-500 font-semibold text-sm">{{ $application->position }}</p>
+                                </td>
+                                <td>
+                                    <p class="text-gray-500 text-sm font-semibold mb-0">
+                                        {{ Carbon\Carbon::parse($application->created_at)->format('d.m.Y') }}</p>
+                                </td>
 
-                            <td>
-                                <p class="px-2 py-1 text-center bg-[#FFA755]  rounded-3xl font-light text-white">Pending</p>
-                            </td>
+                                <td>
 
-                            <td>
-                                <a href="#" class="text-[#207456] text-sm font-semibold mb-0 hover:opacity-60"> <i
-                                        class="fa fa-eye"></i>&ensp;Details</a>
-                            </td>
-                            <td class="space-x-2">
+                                    @if ($application->status == '1')
+                                        <p
+                                            class="px-2 py-0.5 text-center border border-[#FFA755] text-[#FFA755]  rounded-3xl">
+                                            <i class="fa fa-dot-circle-o"></i> Pending
+                                        </p>
+                                    @elseif ($application->status == '2')
+                                        <p
+                                            class="px-2  py-0.5 text-center border border-[#3498db] text-[#3498db] rounded-3xl">
+                                            <i class="fa fa-dot-circle-o"></i> Ongoing
+                                        </p>
+                                    @endif
+                                </td>
 
-                                <a href="#"
-                                    class="border border-[#34BAA5] text-[#34BAA5] py-1 px-3 rounded-md hover:bg-[#34BAA5] hover:text-white"
-                                    title="shortlist"><i class="fa fa-check"></i></a>
+                                <td class="space-x-2">
+                                    <div class="relative inline-block text-left" x-data="{ isOpen: false }">
+                                        <button @click="isOpen = !isOpen" type="button"
+                                            class="inline-flex items-center justify-center w-full rounded-md shadow-sm px-4 py-2 text-sm font-medium text-gray-700 focus:outline-none focus:border-blue-300 focus:ring focus:ring-blue-200  active:text-gray-800">
+                                            <i class="fa fa-ellipsis-v mr-2 self-center"></i>
+                                        </button>
 
-                                <a href="#"
-                                    class="border border-red-300 text-red-400 py-1 px-3 rounded-md hover:bg-red-400 hover:text-white"
-                                    title="reject"><i class="fa fa-ban"></i></a>
-                                {{-- 
-                                <a href="#"
-                                    class="border border-[#D766C2] text-[#D766C2] py-1 px-3 rounded-md hover:bg-[#D766C2] hover:text-white"
-                                    title="complete"><i class="fa fa-eye"></i></a> --}}
-                                <a href="#"
-                                    class="border border-[#FFA755] text-[#FFA755] py-1 px-3 rounded-md hover:bg-[#FFA755] hover:text-white"
-                                    title="download cv"><i class="fa fa-download"></i></a>
-                            </td>
-                        </tr>
+                                        <div x-show="isOpen" @click.away="isOpen = false"
+                                            class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10">
+                                            <div class="py-2 font-medium" role="menu" aria-orientation="vertical"
+                                                aria-labelledby="options-menu">
+
+                                                @if ($application->status == '1')
+                                                    <form action="{{ route('approve', ['id' => $application->id]) }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <button type="submit"
+                                                            class="block text-left w-full px-4 py-2 text-sm text-green-700 hover:bg-green-100 hover:text-green-900"
+                                                            role="menuitem"><i
+                                                                class="fa fa-check-circle mr-2"></i>Approve</button>
+                                                    </form>
+
+                                                    <form action="{{ route('reject', ['id' => $application->id]) }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <button type="submit"
+                                                            class="block text-left w-full px-4 py-2 text-sm text-red-700 hover:bg-red-100 hover:text-red-900"
+                                                            role="menuitem"><i
+                                                                class="fa fa-times-circle mr-2"></i>Reject</button>
+                                                    </form>
+                                                @elseif($application->status == '2')
+                                                    <form action="{{ route('reject', ['id' => $application->id]) }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <button type="submit"
+                                                            class="block text-left w-full px-4 py-2 text-sm text-red-700 hover:bg-red-100 hover:text-red-900"
+                                                            role="menuitem"><i
+                                                                class="fa fa-times-circle mr-2"></i>Reject</button>
+                                                    </form>
+                                                    <form action="{{ route('hire', ['id' => $application->id]) }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <button type="submit"
+                                                            class="block text-left w-full px-4 py-2 text-sm text-[#D766C2] hover:bg-[#efc5e8] hover:text-[#D766C2]"
+                                                            role="menuitem"><i
+                                                                class="fab fa-hire-a-helper mr-2"></i>Hire</button>
+                                                    </form>
+                                                @endif
+
+                                            </div>
+                                        </div>
+                                    </div>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
+
+            @if (session('status'))
+                <div class="py-1 absolute right-14 top-2 px-6 rounded-md font-medium  text-white bg-[#34BAA5]"
+                    id="job-status">
+                    <i class="fa fa-check-circle"></i>
+                    {{ session('status') }}
+                </div>
+            @endif
 
         </section>
     </section>

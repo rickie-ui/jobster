@@ -13,7 +13,35 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('admin.dashboard');
+        $applicants = DB::table('users')
+                 ->where('role', 'applicant')
+                 ->get();
+
+        $interviews = DB::table('applications')
+                 ->where('status', '2')
+                 ->get();
+        
+        $applications = DB::table('applications')
+                 ->get();
+
+         $users = DB::table('applications')
+                    ->leftJoin('users', 'applications.user_id', '=', 'users.id')
+                    ->leftJoin('profiles', 'applications.user_id', '=', 'profiles.user_id')
+                    ->leftJoin('jobs', 'applications.job_id', '=', 'jobs.id')
+                    ->select(
+                        'users.full_name',
+                        'applications.id',
+                        'profiles.phone',
+                        'applications.status',
+                        'jobs.position',
+                    )
+                    ->get();
+
+
+        $jobs = DB::table('jobs')
+                 ->get();
+        
+        return view('admin.dashboard', compact('applicants', 'interviews', 'applications', 'jobs', 'users'));
     }
 
     /**
@@ -53,8 +81,9 @@ class DashboardController extends Controller
     {
          $applicants = DB::table('users')
          ->leftJoin('profiles', 'users.id', '=', 'profiles.user_id')
-         ->select('users.id', 'users.full_name', 'users.email', 'profiles.location','profiles.phone', 'profiles.age', 'profiles.gender', 'profiles.about', 'profiles.resume', 'profiles.avatar' )    
-           ->get();
+         ->select('users.id', 'users.full_name', 'users.email', 'profiles.location','profiles.phone', 'profiles.age', 'profiles.gender', 'profiles.about', 'profiles.resume', 'profiles.avatar' )
+         ->where('role', 'applicant')    
+        ->get();
 
         return view('admin.applicants', compact('applicants'));
     }

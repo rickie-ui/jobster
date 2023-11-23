@@ -77,3 +77,7 @@ Route::get('/admin/update/{edit}', [JobOffersController::class, 'edit'])->name('
 Route::put('/admin/update/{edit}', [JobOffersController::class, 'update']);
 
 Route::get('/admin/applications', [ApplicationsController::class, 'index'])->name('listing');
+
+Route::put('/admin/status/approve/{id}', [ApplicationsController::class, 'approve'])->name('approve');
+Route::put('/admin/status/reject/{id}', [ApplicationsController::class, 'reject'])->name('reject');
+Route::put('/admin/status/hire/{id}', [ApplicationsController::class, 'hire'])->name('hire');
