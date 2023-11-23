@@ -17,11 +17,18 @@ class RedirectIfAuthenticated
      */
     public function handle(Request $request, Closure $next, string ...$guards): Response
     {
-        $guards = empty($guards) ? [null] : $guards;
+         $guards = empty($guards) ? [null] : $guards;
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
+                // Check the user's role and redirect to the appropriate home page
+                $user = Auth::guard($guard)->user();
+
+                if ($user->role == 'admin') {
+                    return redirect(RouteServiceProvider::HOME);
+                } elseif ($user->role == 'applicant') {
+                    return redirect(RouteServiceProvider::APPLICANT_HOME);
+                }
             }
         }
 

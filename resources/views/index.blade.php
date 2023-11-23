@@ -70,7 +70,7 @@
                     </div>
 
                     <div class="grid grid-cols-2 place-items-center">
-                        <p class="opacity-60">{{ $job->created_at }} by <br> <span class="opacity-100 font-bold">
+                        <p class="opacity-60">{{ $job->created_at }} by <br> <span class="text-sm opacity-100 font-bold">
                                 {{ $job->company }}</span>
                         </p>
                         <p class="w-20 h-20 text-3xl flex items-center justify-center rounded-3xl bg-[#E6F0F9]"><i

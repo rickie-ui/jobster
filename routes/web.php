@@ -32,35 +32,40 @@ Route::get('/about', function () {
 });
 
 // logout logic
-Route::post('/logout', [UserController::class, 'logout'])->name('logout');
-
-//users/applicants
-Route::get('/users/signup', [UserController::class, 'index'])->name('signup');
-Route::post('/users/signup', [UserController::class, 'store']);
-
-Route::get('/users/signin', [UserController::class, 'show'])->name('signin');
-Route::post('/users/signin', [UserController::class, 'login']);
-
-// authenticated user pages
-Route::get('users/jobs', [JobsController::class, 'index'])->name('jobs');
-Route::get('users/jobs/search', [JobsController::class, 'search'])->name('jobs-search');
-Route::get('users/jobs/detail/{id}', [JobsController::class, 'show'])->name('detail');
-Route::post('users/jobs/{id}/apply', [JobsController::class, 'store'])->name('store');
-Route::get('users/applications', [JobsController::class, 'create'])->name('applications');
-
-Route::get('users/profile/{id}', [ProfileController::class, 'index'])->name('profile');
-Route::put('users/profile/{id}', [ProfileController::class, 'update']);
+Route::post('/logout', [UserController::class, 'logout'])->name('logout')->middleware('auth');
 
 
-// Admin pages
+Route::middleware(['auth', 'checkRole:applicant'])->group(function () {
+            // authenticated user pages
+        Route::get('users/jobs', [JobsController::class, 'index'])->name('jobs');
+        Route::get('users/jobs/search', [JobsController::class, 'search'])->name('jobs-search');
+        Route::get('users/jobs/detail/{id}', [JobsController::class, 'show'])->name('detail');
+        Route::post('users/jobs/{id}/apply', [JobsController::class, 'store'])->name('store');
+        Route::get('users/applications', [JobsController::class, 'create'])->name('applications');
+
+        Route::get('users/profile/{id}', [ProfileController::class, 'index'])->name('profile');
+        Route::put('users/profile/{id}', [ProfileController::class, 'update']);
+});
+
+
+// admin and users pages
 // >> authentication pages
+Route::middleware(['guest'])->group(function () {
+        Route::get('/admin/register', [UserController::class, 'signup'])->name('register');
+        Route::post('/admin/register', [UserController::class, 'create']);
 
-Route::get('/admin/register', [UserController::class, 'signup'])->name('register');
-Route::post('/admin/register', [UserController::class, 'create']);
+        Route::get('/admin/login', [UserController::class, 'signin'])->name('login');
+        Route::post('/admin/login', [UserController::class, 'login']);
 
-Route::get('/admin/login', [UserController::class, 'signin'])->name('login');
-Route::post('/admin/login', [UserController::class, 'login']);
+        Route::get('/users/signup', [UserController::class, 'index'])->name('signup');
+        Route::post('/users/signup', [UserController::class, 'store']);
 
+        Route::get('/users/signin', [UserController::class, 'show'])->name('signin');
+        Route::post('/users/signin', [UserController::class, 'login']);
+});
+
+
+Route::middleware(['auth', 'checkRole:admin'])->group(function () {
 // >> other pages
 Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 Route::get('/admin/applicants', [DashboardController::class, 'show'])->name('applicants');
@@ -81,3 +86,10 @@ Route::get('/admin/applications', [ApplicationsController::class, 'index'])->nam
 Route::put('/admin/status/approve/{id}', [ApplicationsController::class, 'approve'])->name('approve');
 Route::put('/admin/status/reject/{id}', [ApplicationsController::class, 'reject'])->name('reject');
 Route::put('/admin/status/hire/{id}', [ApplicationsController::class, 'hire'])->name('hire');
+
+});
+
+// Fallback route for 404 errors
+Route::fallback(function () {
+    return view('errors.404');
+});

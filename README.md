@@ -1,7 +1,3 @@
 <!-- TODO -->
 
-### complete the logic of the following:
-
-> > authentication
-> > applications
-> > dashboard
+> > more features and improvements in future
